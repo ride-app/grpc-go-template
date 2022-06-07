@@ -74,6 +74,6 @@ func main() {
 	log.Info("Service Initialized")
 
 	grpcServer := grpc.NewServer(opts...)
-	pb.RegisterRechargeServiceServer(grpcServer, service)
+	pb.RegisterEntityServiceServer(grpcServer, service)
 	panic(grpcServer.Serve(lis))
 }

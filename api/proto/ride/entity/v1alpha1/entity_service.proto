@@ -2,7 +2,6 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/field_mask.proto";
-import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 
@@ -16,27 +15,27 @@ service EntityService {
     };
   }
 
-  rpc GetEntity(GetEntityRequest) returns (Entity) {
+  rpc GetEntity(GetEntityRequest) returns (GetEntityResponse) {
     option (google.api.http) = {
       get: "/v1alpha1/{name=entitys/*}"
     };
   }
 
-  rpc CreateEntity(CreateEntityRequest) returns (Entity) {
+  rpc CreateEntity(CreateEntityRequest) returns (CreateEntityResponse) {
     option (google.api.http) = {
       post: "/v1alpha1/entitys"
       body: "Entity"
     };
   }
 
-  rpc UpdateEntity(UpdateEntityRequest) returns (Entity) {
+  rpc UpdateEntity(UpdateEntityRequest) returns (UpdateEntityResponse) {
     option (google.api.http) = {
       patch: "/v1alpha1/{Entity.name=entitys/*}"
       body: "Entity"
     };
   }
 
-  rpc DeleteEntity(DeleteEntityRequest) returns (google.protobuf.Empty) {
+  rpc DeleteEntity(DeleteEntityRequest) returns (DeleteEntityResponse) {
     option (google.api.http) = {
       delete: "/v1alpha1/{name=entitys/*}"
     };
@@ -44,11 +43,14 @@ service EntityService {
 }
 
 message Entity {
-  // Relative resource name of Recharge, for example: "entitys/recharge1"
+  // Relative resource name of Entity, for example: "entitys/entity1"
   string name = 1 [(validate.rules).string = {
                     pattern: "^entitys/[A-Za-z0-9_-]+$",
                     ignore_empty: true
                   }];
+  
+  // Output only. Timestamp when the Entity was created.
+  google.protobuf.Timestamp create_time = 4;
 }
 
 message ListEntitysRequest {
@@ -65,7 +67,7 @@ message ListEntitysRequest {
 message ListEntitysResponse {
   // The field name should match the noun "Entity" in the method name.
   // There will be a maximum number of items returned based on the page_size field in the request.
-  repeated Entity Entitys = 1;
+  repeated Entity entitys = 1;
 
   // Token to retrieve the next page of results, or empty if there are no more results in the list.
   string next_page_token = 2;
@@ -76,28 +78,46 @@ message GetEntityRequest {
   string name = 1;
 }
 
+message GetEntityResponse {
+  // The field name should match the noun "Entity" in the method name.
+  Entity entity = 1;
+}
+
 message CreateEntityRequest {
   // The parent resource name where the Entity is to be created.
   string parent = 1;
 
   // The Entity id to use for this Entity.
-  string Entity_id = 2;
+  string entity_id = 2;
 
   // The Entity resource to create.
   // The field name should match the Noun in the method name.
-  Entity Entity = 3;
+  Entity entity = 3;
+}
+
+message CreateEntityResponse {
+  // The field name should match the noun "Entity" in the method name.
+  Entity entity = 1;
 }
 
 message UpdateEntityRequest {
   // The Entity resource which replaces the resource on the server.
-  Entity Entity = 1;
+  Entity entity = 1;
 
   // The update mask applies to the resource. For the `FieldMask` definition,
   // see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   google.protobuf.FieldMask update_mask = 2;
 }
 
+message UpdateEntityResponse {
+  // The field name should match the noun "Entity" in the method name.
+  Entity entity = 1;
+}
+
 message DeleteEntityRequest {
   // The resource name of the Entity to be deleted.
   string name = 1;
+}
+
+message DeleteEntityResponse {
 }

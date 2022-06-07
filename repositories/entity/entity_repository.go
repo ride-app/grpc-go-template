@@ -16,7 +16,7 @@ type EntityRepository interface {
 
 	GetEntitys(ctx context.Context, parentId string) ([]*pb.Entity, error)
 
-	UpdateEntity(ctx context.Context, entity *pb.Entity) (createTime *time.Time, err error) 
+	UpdateEntity(ctx context.Context, entity *pb.Entity) (createTime *time.Time, err error)
 
 	DeleteEntity(ctx context.Context, id string) (createTime *time.Time, err error)
 }
