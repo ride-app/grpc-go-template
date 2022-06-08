@@ -1,14 +1,14 @@
 version: 0.1
 cli:
-  version: 0.12.1-beta
-runtimes:
-  enabled:
-    - go@1.18.3
+  version: 0.13.0-beta
+
 lint:
   enabled:
+    - shellcheck@0.8.0
+    - shfmt@3.5.0
     - goimports@0.1.10
     - actionlint@1.6.13
-    - semgrep@0.95.0
+    - semgrep@0.96.0
     - prettier@2.6.2
     - gitleaks@8.8.7
     - gofmt@1.16.7
@@ -18,10 +18,6 @@ lint:
     - buf-lint@1.5.0
 
   ignore:
-    - linters: [ALL]
-      paths:
-        - "**/package-lock.json"
-
     - linters: [golangci-lint]
       paths:
         - tools
