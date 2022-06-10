@@ -24,14 +24,14 @@ service EntityService {
   rpc CreateEntity(CreateEntityRequest) returns (CreateEntityResponse) {
     option (google.api.http) = {
       post: "/v1alpha1/entitys"
-      body: "Entity"
+      body: "*"
     };
   }
 
   rpc UpdateEntity(UpdateEntityRequest) returns (UpdateEntityResponse) {
     option (google.api.http) = {
-      patch: "/v1alpha1/{Entity.name=entitys/*}"
-      body: "Entity"
+      patch: "/v1alpha1/{entity.name=entitys/*}"
+      body: "*"
     };
   }
 
